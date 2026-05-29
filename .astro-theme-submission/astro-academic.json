@@ -1,0 +1,9 @@
+{
+  "name": "astro-academic",
+  "description": "Typography-driven academic homepage template. Serif fonts, data-driven About page, KaTeX + Mermaid support. 5-minute setup.",
+  "repository": "https://github.com/MaxwelsDonc/astro-academic",
+  "demo": "https://zhouzenghui.site",
+  "image": "/images/themes/astro-academic.png",
+  "tags": ["blog", "portfolio", "seo"],
+  "features": ["mdx", "rss", "data-fetching"]
+}
