@@ -253,3 +253,27 @@ graph TD
 ## License
 
 MIT
+
+## Required GitHub Settings
+
+After creating your repo from this template, configure these **one-time settings**:
+
+### 1. Enable Workflow Permissions
+**Settings → Actions → General → Workflow permissions**
+- Select **"Read and write permissions"**
+- Save
+
+This lets the deploy workflow push your built site to GitHub Pages.
+
+### 2. Set Pages Source
+**Settings → Pages → Build and deployment**
+- Source: **GitHub Actions**
+
+Your site deploys automatically on every push to `main`. No API tokens or secrets needed.
+
+### 3. (Optional) Scholar Citations
+If you want Google Scholar citation counts:
+- **Settings → Secrets and variables → Actions → New repository secret**
+- Name: `GOOGLE_SCHOLAR_ID`
+- Value: Your Google Scholar user ID (e.g. `mrf-JvkAAAAJ`)
+- Copy `google_scholar_crawler/` from the [original repo](https://github.com/MaxwelsDonc/MaxwelsDonc.github.io/tree/main/google_scholar_crawler)
