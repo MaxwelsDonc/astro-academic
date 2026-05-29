@@ -1,6 +1,6 @@
 # astro-academic
 
-![screenshot](images/social-preview.png)
+![screenshot](https://raw.githubusercontent.com/MaxwelsDonc/astro-academic/main/public/images/social-preview.png)
 
 
 A typography-driven academic homepage + blog template built with [Astro 5](https://astro.build). Editorial minimalist design — serif headlines, generous whitespace, no card UI. Fork, edit a few files, push to GitHub, and your site is live.
