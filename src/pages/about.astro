@@ -1,0 +1,183 @@
+---
+/**
+ * ABOUT PAGE — renders from src/data/*.yml and src/data/intro.md.
+ * Edit those files to update your CV. Never touch this file.
+ */
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AboutCard from "../components/AboutCard.astro";
+import Section from "../components/Section.astro";
+import Badge from "../components/Badge.astro";
+import CitationCount from "../components/CitationCount.astro";
+
+// Data files — edit these, not the HTML below
+import introRaw from "../data/intro.md?raw";
+import education from "../data/education";
+import experience from "../data/experience";
+import news from "../data/news";
+import publications from "../data/publications";
+import projects from "../data/projects";
+import honors from "../data/honors";
+import services from "../data/services";
+import skills from "../data/skills";
+
+const USER_ID = "mrf-JvkAAAAJ";
+const scholarUrl = (paperId: string) =>
+  `https://scholar.google.com/citations?view_op=view_citation&hl=en&user=${USER_ID}&citation_for_view=${USER_ID}:${paperId}`;
+
+// Split intro.md into paragraphs by double-newline
+const introParagraphs = introRaw.trim().split(/\n\n+/);
+
+// Convert Markdown inline to HTML: **bold** and [text](url)
+const mdInline = (s: string) =>
+  s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+   .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+---
+
+<BaseLayout title="About">
+  <div class="content-container about-page" style="padding-top: var(--space-lg)">
+    <AboutCard />
+
+    <Section title="About Me">
+      {introParagraphs.map(p => <p set:html={mdInline(p.trim())} />)}
+    </Section>
+
+    <Section title="Education">
+      <ul class="edu-list">
+        {education.map((item: any) => (
+          <li class="edu-item">
+            <span class="edu-date">{item.date}</span>
+            <div>
+              <div class="edu-main"><strong>{item.title}</strong>, {item.school}.</div>
+              <div class="cv-desc">{item.description}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section title="Experience">
+      <ul class="edu-list">
+        {experience.map((item: any) => (
+          <li class="edu-item">
+            <span class="edu-date">{item.date}</span>
+            <div>
+              <div class="edu-main"><strong>{item.title}</strong>, {item.company}.</div>
+              <div class="cv-desc">{item.description}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section title="News">
+      <ul class="news-list">
+        {news.map((item: any) => (
+          <li class="news-item">
+            <span class="news-date">{item.date}</span>
+            <span>
+              {item.text}
+              {item.link && <a href={item.link}>{item.linkText || item.link}</a>}
+              {item.suffix && <> {item.suffix}</>}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </Section>
+
+    <Section title="Publications">
+      {publications.sections.map((section: any) => (
+        <>
+          <p class="cv-subheading">{section.heading}</p>
+          {section.papers.map((paper: any) => (
+            <div class="pub-item">
+              <div class="pub-title">
+                <a href={scholarUrl(paper.paperId)}>{paper.title}</a>
+              </div>
+              <div class="pub-authors">
+                <Badge variant="journal">{paper.venue}</Badge>
+                <CitationCount paperId={paper.paperId} />
+                <span set:html={mdInline(paper.authors)} />
+              </div>
+            </div>
+          ))}
+        </>
+      ))}
+    </Section>
+
+    <Section title="Research Projects">
+      {projects.map((item: any) => (
+        <div class="cv-row">
+          <span class="cv-label edu-date">{item.date}</span>
+          <div>
+            <div class="cv-main">
+              <Badge variant="project">{item.role}</Badge>
+              {item.link ? (
+                <a href={item.link}>{item.title}</a>
+              ) : (
+                item.title
+              )}
+            </div>
+            <div class="cv-desc">{item.description}</div>
+          </div>
+        </div>
+      ))}
+    </Section>
+
+    <Section title="Honors and Awards">
+      {honors.sections.map((section: any) => (
+        <>
+          <p class="cv-subheading">{section.heading}</p>
+          {section.items.map((item: any) => (
+            <div class="cv-row">
+              <span class="cv-label edu-date">{item.date}</span>
+              <span class="cv-main">
+                <Badge variant="honor">{item.level}</Badge> {item.text}
+              </span>
+            </div>
+          ))}
+        </>
+      ))}
+    </Section>
+
+    <Section title="Academic Services">
+      {services.sections.map((section: any) => (
+        <>
+          <p class="cv-subheading">{section.heading}</p>
+          {section.items.map((item: any) => (
+            <div class="pub-item">
+              <Badge variant="role">{item.role}</Badge> {item.text}
+            </div>
+          ))}
+        </>
+      ))}
+    </Section>
+
+    <Section title="Skills">
+      <div class="skill-tags">
+        {skills.map((skill: string) => (
+          <span class="skill-tag">{skill}</span>
+        ))}
+      </div>
+    </Section>
+  </div>
+</BaseLayout>
+
+<script>
+  // Google Scholar citation loader
+  (function () {
+    const STATS_URL = document.querySelector('[data-stats-url]')?.getAttribute('data-stats-url');
+    if (!STATS_URL) return;
+    fetch(STATS_URL)
+      .then((r) => r.json())
+      .then((data) => {
+        document.querySelectorAll('[data-paper-id]').forEach((el) => {
+          const paperId = el.getAttribute('data-paper-id');
+          if (paperId && data.publications && data.publications[paperId]) {
+            el.textContent = `Citations: ${data.publications[paperId].num_citations}`;
+          }
+        });
+      })
+      .catch(() => {});
+  })();
+</script>

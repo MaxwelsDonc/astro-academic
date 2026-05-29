@@ -1,0 +1,17 @@
+---
+import { googleScholar } from "../config";
+
+export interface Props {
+  paperId: string;
+}
+const { paperId } = Astro.props;
+---
+
+{googleScholar.enabled && (
+  <span
+    class="badge badge-citation"
+    data-paper-id={paperId}
+    data-stats-url={googleScholar.statsUrl}
+  >
+  </span>
+)}
