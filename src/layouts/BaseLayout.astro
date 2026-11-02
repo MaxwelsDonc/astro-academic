@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { site } from "../config";
+import { site, author } from "../config";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
@@ -15,6 +15,8 @@ const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — Home
 const pageDescription = description || site.description;
 
 const currentPath = Astro.url.pathname;
+const socialImage = new URL(ogImage || author.avatar, site.url).href;
+const twitterHandle = author.x ? `@${author.x}` : undefined;
 ---
 
 <!doctype html>
@@ -24,14 +26,15 @@ const currentPath = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net" />
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|newsreader:400,500,600,700" rel="stylesheet" />
+    <!-- Fonts: self-hosted variable fonts, preloaded (all above the fold) -->
+    <link rel="preload" href="/fonts/Newsreader.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/NotoSerifSC-sample.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
 
     <title>{pageTitle}</title>
 
     <link rel="canonical" href={new URL(currentPath, site.url).href} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={pageTitle} />
@@ -39,9 +42,17 @@ const currentPath = Astro.url.pathname;
     <meta property="og:url" content={new URL(currentPath, site.url).href} />
     <meta property="og:site_name" content={site.title} />
     <meta property="og:type" content="website" />
-    {ogImage && <meta property="og:image" content={new URL(ogImage, site.url).href} />}
+    <meta property="og:image" content={socialImage} />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={socialImage} />
+    {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
 
     <!-- Favicon -->
+    <link rel="icon" href="/images/favicon/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/images/favicon/apple-touch-icon.png" />
@@ -69,7 +80,16 @@ const currentPath = Astro.url.pathname;
       <slot />
     </main>
 
+    <Footer />
+
     <script>
+      // Set stagger delays via CSS custom property so any number of children works
+      document.querySelectorAll(".reveal-stagger").forEach((el) => {
+        Array.from(el.children).forEach((child, i) => {
+          (child as HTMLElement).style.setProperty("--stagger-delay", `${i * 0.1}s`);
+        });
+      });
+
       // Scroll reveal animation
       const observer = new IntersectionObserver(
         (entries) => {
