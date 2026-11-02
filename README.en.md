@@ -31,8 +31,8 @@ Serif for reading, monospace for dates and structure; warm ivory ground, no card
 | Single page | About, News, Experience, Publications, Education—toggle sections on or off |
 | Fluid type | Name, subtitle, and portrait scale together with the viewport |
 | Section nav | Header anchors highlight where you are and jump on click |
+| **Auto Google Scholar citations** | A daily GitHub Action refreshes citation counts next to your papers |
 | Self-hosted fonts | Newsreader, Inter, JetBrains Mono (SIL OFL); no external font CDN in the build |
-| Citations (optional) | Off by default; the sample never requests Scholar data |
 
 ## Get started
 
@@ -50,6 +50,21 @@ npm run dev    # http://localhost:4321
 npm run build
 ```
 
-Field reference, papers, Scholar setup, and custom domains: **[`docs/CONTENT.md`](docs/CONTENT.md)**.
+## Google Scholar citations
+
+Off in the sample—nothing fetches Scholar data until you opt in. When enabled, the bundled crawler and Action **refresh citations daily** (or on demand).
+
+1. Copy your Scholar user id from the profile URL (`user=…`)
+2. Add repository secret **`GOOGLE_SCHOLAR_ID`** under Settings → Secrets → Actions
+3. Enable Actions; `.github/workflows/google_scholar_crawler.yaml` pushes JSON to the `google-scholar-stats` branch (08:00 UTC daily, or `workflow_dispatch`)
+4. Set `googleScholar.enabled = true` in `src/config.ts` and point `statsUrl` at your jsDelivr URL:
+
+```text
+https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
+```
+
+5. Add a `paperId` (`author_pub_id`) on each paper
+
+Field examples and troubleshooting: **[`docs/CONTENT.md`](docs/CONTENT.md)**.
 
 The footer links back to this template by default—set `site.showTemplateCredit` to `false` in `src/config.ts` to remove it.

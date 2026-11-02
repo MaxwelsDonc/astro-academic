@@ -31,8 +31,8 @@
 | 单页结构 | About、News、Experience、Publications、Education 等章节可单独开关 |
 | 流体排版 | 姓名、副标题与头像随视口一起缩放 |
 | 章节导航 | 顶栏锚点高亮当前段落，点击即跳转 |
+| **Google Scholar 自动更新** | GitHub Action 按日抓取引用数，论文旁展示最新 citations |
 | 自托管字体 | Newsreader、Inter、JetBrains Mono（SIL OFL），构建结果不拉外链字体 |
-| 引用数（可选） | 默认关闭；示例站不请求任何 Scholar 数据 |
 
 ## 开始
 
@@ -50,6 +50,21 @@ npm run dev    # http://localhost:4321
 npm run build
 ```
 
-论文字段、新闻格式、Google Scholar、自定义域名等细节见 **[`docs/CONTENT.md`](docs/CONTENT.md)**。
+## Google Scholar 引用数
+
+示例站默认**关闭**，不会请求任何人的 Scholar 数据。打开后，引用数由仓库自带的 crawler + Action **每天自动更新**（也可手动触发）。
+
+1. 在 Scholar 主页 URL 里找到 user id（`user=…`）
+2. 仓库 **Settings → Secrets → Actions** 新增 `GOOGLE_SCHOLAR_ID`
+3. 打开 **Actions**，启用 workflows；工作流 `.github/workflows/google_scholar_crawler.yaml` 会把 JSON 推到 `google-scholar-stats` 分支（每天 08:00 UTC，也可 `workflow_dispatch`）
+4. 在 `src/config.ts` 设 `googleScholar.enabled = true`，并把 `statsUrl` 指到你的 jsDelivr 地址：
+
+```text
+https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
+```
+
+5. 给论文条目加上 `paperId`（Scholar 的 `author_pub_id`）
+
+字段示例与排错见 **[`docs/CONTENT.md`](docs/CONTENT.md)**。
 
 页脚默认保留指向本模板的「扉页」链接；不需要时在 `src/config.ts` 将 `site.showTemplateCredit` 设为 `false`。
