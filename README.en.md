@@ -2,56 +2,42 @@
 
 **English** · [简体中文](./README.md)
 
-A one-page academic homepage for people who publish on paper, not on dashboards. Your name, bio, news, papers, and timeline live on a single scroll—typography that breathes with the viewport, like a flyleaf that scales instead of snapping at a breakpoint.
+A one-page homepage for people who still write for readers. Name, bio, news, and papers—enough to finish in one sitting. Less dashboard, more flyleaf.
 
-Serif for reading, monospace for dates and structure; warm ivory ground, no cards, no shadows, no blog to feed. Edit config and JSON; GitHub Pages ships the rest.
+Serif for the prose, monospace for the dates; ivory paper, no cards, no blog to feed. Change a config and a handful of JSON files, push to GitHub Pages, and the page is yours.
 
 <p align="center">
-  <a href="https://zhouzenghui.site"><strong>Live demo → zhouzenghui.site</strong></a>
+  <a href="https://zhouzenghui.site"><strong>See it live → zhouzenghui.site</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/MaxwelsDonc/feiye/generate"><strong>Use this template</strong></a>
 </p>
 
-<p align="center"><sub>The demo shares this template’s <strong>layout</strong>; the CV on that site is the author’s own, not the fictional sample in this repo.</sub></p>
+<p align="center"><sub>The live site shares this template’s layout; the CV there is the author’s. Ye Fei and Qinglan University in the repo are fiction.</sub></p>
 
 <p align="center">
   <img src="docs/screenshot.png" alt="Feiye on desktop and mobile" width="100%" />
 </p>
 
-<p align="center"><sub>One layout language: wide screens open up, narrow screens tighten—no hard 768px swap.</sub></p>
+<p align="center"><sub>Wide screens open up; narrow ones tighten. Type and space move with the viewport—no sudden costume change at a breakpoint.</sub></p>
 
-## Who it’s for
+## What’s on the page
 
-- You want a **formal, quiet** academic presence without running a CMS
-- Visitors should **finish the story in one scroll**, not hunt across About and Blog
-- You’re happy maintaining **`src/config.ts` + JSON**, not Astro components
+- **One scroll** — About, news, papers, experience; toggle what you need, skip the blog  
+- **Edit the data** — Day to day, only `src/config.ts` and `src/data/`  
+- **Fluid type** — Name, subtitle, and portrait scale together; no second layout waiting at 768px  
+- **A nav that knows where you are** — Anchors, with the current section lit  
+- **Push to publish** — Ship `main`; Actions builds to GitHub Pages  
+- **Citations that keep growing** — A daily Scholar crawl writes JSON to branch `google-scholar-stats`, not to your site sources  
+- **Fonts in the repo** — Newsreader, Inter, JetBrains Mono under the SIL OFL; no font CDN  
+- **The rest stays quiet** — Analytics, custom domain, and the footer credit are optional; email is Base64; empty social fields simply vanish  
 
-## What you get
+## Make it yours
 
-| Experience | Details |
-|------------|---------|
-| Single page, toggled sections | About, News, Experience, Publications, Education, Projects, Honors… on or off |
-| Edit data, not chrome | Day-to-day work stays in `src/config.ts` and `src/data/` |
-| Fluid type | Name, subtitle, and portrait scale with `clamp()`—no hard layout swap at 768px |
-| Section nav | Header anchors with the current section highlighted |
-| **One-push GitHub Pages** | Push `main` and Actions builds and deploys—no server of your own |
-| **Auto Google Scholar citations** | Daily Action crawl; JSON lands on branch `google-scholar-stats`, **never rewrites `main`** |
-| Self-hosted fonts | Newsreader / Inter / JetBrains Mono (SIL OFL); no external font CDN |
-| Optional Analytics | Set `analyticsId` to enable; leave empty to disable |
-| Obfuscated email | Address is Base64 in the HTML, not plain text |
-| Empty fields hide | Blank social links simply don’t render |
-| Custom domain | Drop in `public/CNAME` |
-| Template credit optional | `site.showTemplateCredit = false` |
-
-## Get started
-
-1. **[Use this template](https://github.com/MaxwelsDonc/feiye/generate)** → name the repo `your-username.github.io`
-2. Edit **`src/config.ts`** (name, `site.url`, email) and **`astro.config.mjs`** `site` (same URL)
-3. Replace **`public/images/profile.jpg`** (the repo ships a 扉 mark, not a photo)
-4. Rewrite **`src/data/`** and **`intro.md`** (Ye Fei, Qinglan University, and the papers are fiction)
-5. Push **`main`** → Actions deploys to Pages
-
-Local preview:
+1. **[Use this template](https://github.com/MaxwelsDonc/feiye/generate)** and name the repo `your-username.github.io`  
+2. Put your name, `site.url`, and email in `src/config.ts`; mirror the URL in `astro.config.mjs`  
+3. Replace `public/images/profile.jpg` with your photo  
+4. Rewrite `src/data/` and `intro.md`  
+5. Push `main`
 
 ```bash
 npm install
@@ -59,29 +45,14 @@ npm run dev    # http://localhost:4321
 npm run build
 ```
 
-## Google Scholar citations
+## On citations
 
-Off in the sample—nothing fetches Scholar data until you opt in.
+Off by default—the sample never asks Scholar for anyone’s numbers.
 
-When enabled, the flow is:
-
-1. The Action runs the bundled crawler  
-2. It force-pushes `gs_data.json` to a **separate branch** `google-scholar-stats` (**`main` site sources are untouched**)  
-3. The browser reads that branch via jsDelivr and fills citation badges  
-
-Enable it:
-
-1. Copy your Scholar user id from the profile URL (`user=…`)
-2. Add repository secret **`GOOGLE_SCHOLAR_ID`** (Settings → Secrets → Actions)
-3. Enable **Actions**; workflow is `.github/workflows/google_scholar_crawler.yaml` (08:00 UTC daily, or `workflow_dispatch`)
-4. Set `googleScholar.enabled = true` in `src/config.ts` and point `statsUrl` at:
+To turn them on: store your Scholar user id as `GOOGLE_SCHOLAR_ID`, enable Actions. The workflow force-pushes JSON to **`google-scholar-stats`** (not `main`). Then set `googleScholar.enabled`, point `statsUrl` at your jsDelivr URL, and add a `paperId` on each paper.
 
 ```text
 https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
 ```
 
-5. Add a `paperId` (`author_pub_id`) on each paper
-
-Field examples and troubleshooting: **[`docs/CONTENT.md`](docs/CONTENT.md)**. Keep header nav to roughly 5–6 items so the mobile bar stays clean.
-
-The footer links back to this template by default—set `site.showTemplateCredit = false` to remove it.
+Fields and edge cases live in [`docs/CONTENT.md`](docs/CONTENT.md). Keep the header short—five or six links read better on a phone. Drop the footer credit with `site.showTemplateCredit = false` if you prefer silence.
