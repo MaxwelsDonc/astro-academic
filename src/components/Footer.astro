@@ -1,0 +1,23 @@
+---
+import { author, site } from "../config";
+import GitHubIcon from "./icons/GitHubIcon.astro";
+import ScholarIcon from "./icons/ScholarIcon.astro";
+---
+
+<footer class="site-footer">
+  <div class="content-container">
+    <div class="footer-social">
+      {author.github && <a href={`https://github.com/${author.github}`} title="GitHub"><GitHubIcon /></a>}
+      {author.googleScholar && <a href={author.googleScholar} title="Google Scholar"><ScholarIcon /></a>}
+    </div>
+    <p class="footer-copy">
+      &copy; {new Date().getFullYear()} {author.name}
+      {site.showTemplateCredit && (
+        <>
+          <span aria-hidden="true"> · </span>
+          <a href="https://github.com/MaxwelsDonc/astro-academic">扉页</a>
+        </>
+      )}
+    </p>
+  </div>
+</footer>

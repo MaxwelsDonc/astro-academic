@@ -1,0 +1,12 @@
+{
+  "sections": [
+    {
+      "heading": "Awards",
+      "items": [
+        { "date": "2025", "level": "University", "text": "Qinglan Teaching Fellow, for the one-page seminar." },
+        { "date": "2024", "level": "School", "text": "Dean's prize for a short paper on margins." },
+        { "date": "2023", "level": "University", "text": "Graduation prize, Literature and Computing." }
+      ]
+    }
+  ]
+}

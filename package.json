@@ -1,0 +1,17 @@
+{
+  "name": "feiye",
+  "version": "1.0.0",
+  "description": "扉页 — a one-page academic homepage",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "astro": "^5.0.0",
+    "typescript": "^5.7.0"
+  }
+}
