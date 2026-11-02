@@ -12,6 +12,8 @@
   <a href="https://github.com/MaxwelsDonc/feiye/generate"><strong>Use this template</strong></a>
 </p>
 
+<p align="center"><sub>示例站与本模板<strong>版式同源</strong>；站上内容是作者本人履历，不是仓库里的虚构样例。</sub></p>
+
 <p align="center">
   <img src="docs/screenshot.png" alt="扉页在桌面与手机上的预览" width="100%" />
 </p>
@@ -28,11 +30,18 @@
 
 | 体验 | 说明 |
 |------|------|
-| 单页结构 | About、News、Experience、Publications、Education 等章节可单独开关 |
-| 流体排版 | 姓名、副标题与头像随视口一起缩放 |
-| 章节导航 | 顶栏锚点高亮当前段落，点击即跳转 |
-| **Google Scholar 自动更新** | GitHub Action 按日抓取引用数，论文旁展示最新 citations |
-| 自托管字体 | Newsreader、Inter、JetBrains Mono（SIL OFL），构建结果不拉外链字体 |
+| 单页、可开关章节 | About、News、Experience、Publications、Education、Projects、Honors… 按需显示 |
+| 数据在外 | 日常只动 `src/config.ts` 与 `src/data/`，不必碰 Astro 组件 |
+| 流体排版 | 姓名、副标题与头像用 `clamp()` 连续缩放，没有 768px 硬切两套布局 |
+| 章节导航 | 顶栏锚点，当前所在节高亮 |
+| **GitHub Pages 一键发布** | 推送 `main` 即构建部署，无需自备服务器 |
+| **Google Scholar 自动引用** | Action 日更爬取；JSON 写在独立分支 `google-scholar-stats`，**不改 `main`** |
+| 自托管字体 | Newsreader / Inter / JetBrains Mono（SIL OFL），不拉外链字体 CDN |
+| 可选 Analytics | `analyticsId` 填上即开，留空即关 |
+| 邮箱脱敏 | 地址经 Base64，不写进明文 HTML |
+| 空字段隐藏 | 社交链接等留空就不渲染 |
+| 自定义域名 | 添加 `public/CNAME` 即可 |
+| 模板署名可关 | `site.showTemplateCredit = false` |
 
 ## 开始
 
@@ -40,7 +49,7 @@
 2. 编辑 **`src/config.ts`**（姓名、`site.url`、邮箱）与 **`astro.config.mjs`** 中的 `site`（同一网址）
 3. 替换 **`public/images/profile.jpg`**（仓库内为「扉」字占位，请换成你的照片）
 4. 改写 **`src/data/`** 与 **`intro.md`**（叶扉、青澜大学与示例论文均为虚构）
-5. 推送 **`main`** → Actions 自动部署
+5. 推送 **`main`** → Actions 自动部署到 Pages
 
 本地预览：
 
@@ -52,19 +61,27 @@ npm run build
 
 ## Google Scholar 引用数
 
-示例站默认**关闭**，不会请求任何人的 Scholar 数据。打开后，引用数由仓库自带的 crawler + Action **每天自动更新**（也可手动触发）。
+示例默认**关闭**，页面不会请求任何人的 Scholar 数据。
+
+打开后的数据流是：
+
+1. Action 运行仓库里的 crawler  
+2. 把 `gs_data.json` **推到独立分支** `google-scholar-stats`（force push；**不会改动 `main` 上的站点源码**）  
+3. 浏览器从 jsDelivr 读该分支，在论文旁显示 citations  
+
+开启步骤：
 
 1. 在 Scholar 主页 URL 里找到 user id（`user=…`）
 2. 仓库 **Settings → Secrets → Actions** 新增 `GOOGLE_SCHOLAR_ID`
-3. 打开 **Actions**，启用 workflows；工作流 `.github/workflows/google_scholar_crawler.yaml` 会把 JSON 推到 `google-scholar-stats` 分支（每天 08:00 UTC，也可 `workflow_dispatch`）
-4. 在 `src/config.ts` 设 `googleScholar.enabled = true`，并把 `statsUrl` 指到你的 jsDelivr 地址：
+3. 启用 **Actions**；工作流为 `.github/workflows/google_scholar_crawler.yaml`（每天 08:00 UTC，也可手动 `workflow_dispatch`）
+4. 在 `src/config.ts` 设 `googleScholar.enabled = true`，`statsUrl` 指向：
 
 ```text
 https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
 ```
 
-5. 给论文条目加上 `paperId`（Scholar 的 `author_pub_id`）
+5. 给论文加上 `paperId`（Scholar 的 `author_pub_id`）
 
-字段示例与排错见 **[`docs/CONTENT.md`](docs/CONTENT.md)**。
+字段示例与排错见 **[`docs/CONTENT.md`](docs/CONTENT.md)**。顶栏导航建议控制在约 5～6 项，窄屏更干净。
 
-页脚默认保留指向本模板的「扉页」链接；不需要时在 `src/config.ts` 将 `site.showTemplateCredit` 设为 `false`。
+页脚默认保留「扉页」链回本仓库；不需要时设 `site.showTemplateCredit = false`。

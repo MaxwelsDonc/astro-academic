@@ -12,6 +12,8 @@ Serif for reading, monospace for dates and structure; warm ivory ground, no card
   <a href="https://github.com/MaxwelsDonc/feiye/generate"><strong>Use this template</strong></a>
 </p>
 
+<p align="center"><sub>The demo shares this template’s <strong>layout</strong>; the CV on that site is the author’s own, not the fictional sample in this repo.</sub></p>
+
 <p align="center">
   <img src="docs/screenshot.png" alt="Feiye on desktop and mobile" width="100%" />
 </p>
@@ -28,11 +30,18 @@ Serif for reading, monospace for dates and structure; warm ivory ground, no card
 
 | Experience | Details |
 |------------|---------|
-| Single page | About, News, Experience, Publications, Education—toggle sections on or off |
-| Fluid type | Name, subtitle, and portrait scale together with the viewport |
-| Section nav | Header anchors highlight where you are and jump on click |
-| **Auto Google Scholar citations** | A daily GitHub Action refreshes citation counts next to your papers |
-| Self-hosted fonts | Newsreader, Inter, JetBrains Mono (SIL OFL); no external font CDN in the build |
+| Single page, toggled sections | About, News, Experience, Publications, Education, Projects, Honors… on or off |
+| Edit data, not chrome | Day-to-day work stays in `src/config.ts` and `src/data/` |
+| Fluid type | Name, subtitle, and portrait scale with `clamp()`—no hard layout swap at 768px |
+| Section nav | Header anchors with the current section highlighted |
+| **One-push GitHub Pages** | Push `main` and Actions builds and deploys—no server of your own |
+| **Auto Google Scholar citations** | Daily Action crawl; JSON lands on branch `google-scholar-stats`, **never rewrites `main`** |
+| Self-hosted fonts | Newsreader / Inter / JetBrains Mono (SIL OFL); no external font CDN |
+| Optional Analytics | Set `analyticsId` to enable; leave empty to disable |
+| Obfuscated email | Address is Base64 in the HTML, not plain text |
+| Empty fields hide | Blank social links simply don’t render |
+| Custom domain | Drop in `public/CNAME` |
+| Template credit optional | `site.showTemplateCredit = false` |
 
 ## Get started
 
@@ -52,12 +61,20 @@ npm run build
 
 ## Google Scholar citations
 
-Off in the sample—nothing fetches Scholar data until you opt in. When enabled, the bundled crawler and Action **refresh citations daily** (or on demand).
+Off in the sample—nothing fetches Scholar data until you opt in.
+
+When enabled, the flow is:
+
+1. The Action runs the bundled crawler  
+2. It force-pushes `gs_data.json` to a **separate branch** `google-scholar-stats` (**`main` site sources are untouched**)  
+3. The browser reads that branch via jsDelivr and fills citation badges  
+
+Enable it:
 
 1. Copy your Scholar user id from the profile URL (`user=…`)
-2. Add repository secret **`GOOGLE_SCHOLAR_ID`** under Settings → Secrets → Actions
-3. Enable Actions; `.github/workflows/google_scholar_crawler.yaml` pushes JSON to the `google-scholar-stats` branch (08:00 UTC daily, or `workflow_dispatch`)
-4. Set `googleScholar.enabled = true` in `src/config.ts` and point `statsUrl` at your jsDelivr URL:
+2. Add repository secret **`GOOGLE_SCHOLAR_ID`** (Settings → Secrets → Actions)
+3. Enable **Actions**; workflow is `.github/workflows/google_scholar_crawler.yaml` (08:00 UTC daily, or `workflow_dispatch`)
+4. Set `googleScholar.enabled = true` in `src/config.ts` and point `statsUrl` at:
 
 ```text
 https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
@@ -65,6 +82,6 @@ https://cdn.jsdelivr.net/gh/USER/REPO@google-scholar-stats/gs_data.json
 
 5. Add a `paperId` (`author_pub_id`) on each paper
 
-Field examples and troubleshooting: **[`docs/CONTENT.md`](docs/CONTENT.md)**.
+Field examples and troubleshooting: **[`docs/CONTENT.md`](docs/CONTENT.md)**. Keep header nav to roughly 5–6 items so the mobile bar stays clean.
 
-The footer links back to this template by default—set `site.showTemplateCredit` to `false` in `src/config.ts` to remove it.
+The footer links back to this template by default—set `site.showTemplateCredit = false` to remove it.
