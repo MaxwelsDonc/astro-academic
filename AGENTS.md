@@ -2,7 +2,7 @@
 
 This is 扉页, an Astro 5 static site — a one-page academic homepage. Editorial minimalist design: warm paper background, serif typography, monospace metadata.
 
-The repository name stays `astro-academic`. The sample person (Ye Fei, Qinglan University) is fictional. Do not replace that sample with a real CV from another project.
+The repository name stays `feiye`. The sample person (Ye Fei, Qinglan University) is fictional. Do not replace that sample with a real CV from another project.
 
 ## Commands
 - `npm run dev` — start dev server at localhost:4321

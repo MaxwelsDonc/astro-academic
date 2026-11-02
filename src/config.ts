@@ -23,7 +23,7 @@ export const author = {
   location: "Qinglan",
   email: "ye.fei@example.edu",
   /** Username, or owner/repo. The sample points at this template. */
-  github: "MaxwelsDonc/astro-academic",
+  github: "MaxwelsDonc/feiye",
   x: "",
   googleScholar: "",
   /** Scholar user id, the part before the colon in a paper id. */

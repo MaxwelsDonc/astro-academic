@@ -9,7 +9,7 @@ Serif for reading, monospace for dates and structure; warm ivory ground, no card
 <p align="center">
   <a href="https://zhouzenghui.site"><strong>Live demo → zhouzenghui.site</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/MaxwelsDonc/astro-academic/generate"><strong>Use this template</strong></a>
+  <a href="https://github.com/MaxwelsDonc/feiye/generate"><strong>Use this template</strong></a>
 </p>
 
 <p align="center">
@@ -36,7 +36,7 @@ Serif for reading, monospace for dates and structure; warm ivory ground, no card
 
 ## Get started
 
-1. **[Use this template](https://github.com/MaxwelsDonc/astro-academic/generate)** → name the repo `your-username.github.io`
+1. **[Use this template](https://github.com/MaxwelsDonc/feiye/generate)** → name the repo `your-username.github.io`
 2. Edit **`src/config.ts`** (name, `site.url`, email) and **`astro.config.mjs`** `site` (same URL)
 3. Replace **`public/images/profile.jpg`** (the repo ships a 扉 mark, not a photo)
 4. Rewrite **`src/data/`** and **`intro.md`** (Ye Fei, Qinglan University, and the papers are fiction)

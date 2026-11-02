@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://zhouzenghui.site"><strong>查看示例 → zhouzenghui.site</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/MaxwelsDonc/astro-academic/generate"><strong>Use this template</strong></a>
+  <a href="https://github.com/MaxwelsDonc/feiye/generate"><strong>Use this template</strong></a>
 </p>
 
 <p align="center">
@@ -36,7 +36,7 @@
 
 ## 开始
 
-1. **[Use this template](https://github.com/MaxwelsDonc/astro-academic/generate)** → 新仓库命名为 `你的用户名.github.io`
+1. **[Use this template](https://github.com/MaxwelsDonc/feiye/generate)** → 新仓库命名为 `你的用户名.github.io`
 2. 编辑 **`src/config.ts`**（姓名、`site.url`、邮箱）与 **`astro.config.mjs`** 中的 `site`（同一网址）
 3. 替换 **`public/images/profile.jpg`**（仓库内为「扉」字占位，请换成你的照片）
 4. 改写 **`src/data/`** 与 **`intro.md`**（叶扉、青澜大学与示例论文均为虚构）
